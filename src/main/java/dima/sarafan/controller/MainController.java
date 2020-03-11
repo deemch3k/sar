@@ -43,10 +43,14 @@ public class MainController {
 
         if (user != null) {
             data.put("profile", user);
+
+            String messages = writer.writeValueAsString(messageRepo.findAll());
+            model.addAttribute("messages", messages);
+        } else {
+            model.addAttribute("messages", "[]");
         }
 
-        String messages = writer.writeValueAsString(messageRepo.findAll());
-        model.addAttribute("messages", messages);
+
         model.addAttribute("frontendData", data);
         model.addAttribute("isDevMode", "dev".equals(profile));
 

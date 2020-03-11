@@ -1,7 +1,9 @@
 package dima.sarafan.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import dima.sarafan.domain.Comment;
 import dima.sarafan.domain.User;
+import dima.sarafan.domain.Views;
 import dima.sarafan.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +24,7 @@ public class CommentController {
     }
 
     @PostMapping
+    @JsonView(Views.FullComment.class)
     public Comment create(
             @RequestBody Comment comment,
             @AuthenticationPrincipal User user
