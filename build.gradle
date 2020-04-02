@@ -30,6 +30,8 @@ repositories {
 
 node {
 	download = true
+	workDir = file("${projectDir}/.gradle/nodejs")
+
 }
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
