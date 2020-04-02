@@ -15,6 +15,8 @@
 <script>
 
     import {mapActions} from 'vuex'
+    import * as Sentry from '@sentry/browser'
+
 
     export default {
 
@@ -22,7 +24,7 @@
         data: function () {
             return {
                 text: '',
-                id: ''
+                id: null
             }
 
         },
@@ -35,7 +37,6 @@
         methods: {
             ...mapActions(['addMessageAction', 'updateMessageAction']),
             save() {
-
                 if (this.id) {
                     this.updateMessageAction({
                         id: this.id,
@@ -48,10 +49,7 @@
                 }
 
                 this.text = ''
-                this.id = ''
-
-
-
+                this.id = null
             }
         }
     }

@@ -11,6 +11,7 @@ import dima.sarafan.dto.ObjectType;
 import dima.sarafan.repo.MessageRepo;
 import dima.sarafan.repo.UserSubscriptionRepo;
 import dima.sarafan.util.WsSender;
+import io.sentry.Sentry;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -48,7 +49,7 @@ public class MessageService {
     public MessageService(MessageRepo messageRepo, UserSubscriptionRepo userSubscriptionRepo, WsSender wsSender) {
         this.messageRepo = messageRepo;
         this.userSubscriptionRepo = userSubscriptionRepo;
-        this.wsSender = wsSender.getSender(ObjectType.MESSAGE, Views.IdName.class);
+        this.wsSender = wsSender.getSender(ObjectType.MESSAGE, Views.FullMessage.class);
     }
 
     private void fillMeta(Message message) throws IOException {
@@ -101,8 +102,7 @@ public class MessageService {
     }
 
     public Message update(Message messageFromDb, Message message) throws IOException {
-
-        BeanUtils.copyProperties(message, messageFromDb, "id");
+        messageFromDb.setText(message.getText());
         fillMeta(messageFromDb);
         Message updatedMessage = messageRepo.save(messageFromDb);
         wsSender.accept(EventType.UPDATE, updatedMessage);
