@@ -29,7 +29,9 @@ repositories {
 }
 
 node {
-	download = true
+    version = '12.16.1'
+	distBaseUrl = 'https://nodejs.org/dist'
+	download = false
 }
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
